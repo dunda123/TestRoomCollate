@@ -28,6 +28,9 @@ class MainActivity : AppCompatActivity() {
 
         btn_query_data.setOnClickListener { viewModel.findAllUsers(getDB()) }
         btn_add_test_data.setOnClickListener { viewModel.addTestUsers(getDB()) }
+        btn_test_raw_sql.setOnClickListener { viewModel.testRawSQL(getDB(),
+            "CREATE TABLE IF NOT EXISTS User1 (uid INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT NOT NULL, last_name TEXT NOT NULL COLLATE UNICODE)"
+        ) }
 
         // Observe data from Room
         viewModel.allUsers.observe(this, Observer {

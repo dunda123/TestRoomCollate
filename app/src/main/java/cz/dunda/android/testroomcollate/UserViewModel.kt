@@ -8,6 +8,9 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import androidx.sqlite.db.SimpleSQLiteQuery
+
+
 
 
 class UserViewModel(): ViewModel() {
@@ -35,6 +38,20 @@ class UserViewModel(): ViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { users ->
                 allUsers.postValue(users)
+            }
+    }
+
+    fun testRawSQL(db: AppDatabase, sql: String) {
+        Log.d(TAG, "Test RAW sql->$sql")
+
+        val query = SimpleSQLiteQuery(sql)
+
+        dispInsUser  =  Observable.create<Int> { emitter ->
+            emitter.onNext(db.userDao().testRawSQL(query)) }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { user ->
+                Log.d(TAG, "SQL ok")
             }
     }
 

@@ -3,6 +3,8 @@ package cz.dunda.android.testy.roomtest
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.RawQuery
+import androidx.sqlite.db.SupportSQLiteQuery
 
 @Dao
 interface UserDao {
@@ -11,5 +13,8 @@ interface UserDao {
 
     @Insert
     fun insert(vararg users: User)
+
+    @RawQuery
+    fun testRawSQL(query: SupportSQLiteQuery): Int
 
 }
